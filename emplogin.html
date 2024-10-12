@@ -142,9 +142,10 @@
         }
 
         .form-control {
-            border: none;
+            border: 1px;
             border-bottom: 2px solid #ddd;
-            border-radius: 0;
+            border-radius: 4;
+            border-width: 2px;
             padding: 10px 5px;
             transition: all 0.3s ease;
         }
@@ -212,12 +213,12 @@
             <div class="form-group input-icon">
                 <label for="employeeId">Employee ID</label>
                 <input type="text" class="form-control" id="employeeId" required maxlength="7" placeholder="Enter 7 digit Employee ID">
-                <i class="fas fa-id-card"></i>
+              
             </div>
             <div class="form-group input-icon">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" required maxlength="30" placeholder="Enter your password">
-                <i class="fas fa-lock"></i>
+        
             </div>
             <button type="submit" class="btn-custom">Login</button>
         </form>

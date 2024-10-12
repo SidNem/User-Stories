@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -42,7 +42,9 @@
 </html>
 
 
-<!-- 
+
+<!-- new UI-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,15 +74,21 @@
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
         }
 
         .container {
+            width: 100%;
             max-width: 800px;
-            margin: 2rem auto;
+            margin: 0 auto;
             padding: 2rem;
             background: white;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         header {
@@ -91,6 +99,7 @@
         h1 {
             color: var(--primary-color);
             font-weight: 600;
+            font-size: 2rem;
         }
 
         form {
@@ -114,16 +123,22 @@
             border: 1px solid var(--input-border);
             border-radius: 5px;
             font-size: 1rem;
-            transition: border-color 0.3s ease;
+            transition: all 0.3s ease;
+            background-color: var(--input-background);
         }
 
         input:focus, textarea:focus {
             outline: none;
             border-color: var(--input-focus);
-            box-shadow: 0 0 0 2px rgba(78, 84, 200, 0.1);
+            box-shadow: 0 0 0 3px rgba(78, 84, 200, 0.1);
         }
 
-        #submit {
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             border: none;
@@ -133,9 +148,11 @@
             font-size: 1rem;
             font-weight: 500;
             transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        #submit:hover {
+        button:hover {
             background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -149,13 +166,18 @@
 
         .login-link {
             text-align: center;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .login-link a {
             color: var(--primary-color);
             text-decoration: none;
             font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: var(--secondary-color);
         }
 
         footer {
@@ -167,12 +189,9 @@
 
         @media (max-width: 768px) {
             .container {
-                padding: 1rem;
-                margin: 1rem;
+                width: 90%;
+                padding: 1.5rem;
             }
-        }
-        textarea {
-            resize: none; /* Disables resizing */
         }
     </style>
 </head>
@@ -208,7 +227,7 @@
             </div>
             <div class="form-group">
                 <label for="address">Address</label>
-                <textarea id="address" rows="3" maxlength="100" required></textarea>
+                <textarea id="address" maxlength="100" required></textarea>
             </div>
             <div class="form-group">
                 <label for="contact">Contact Number</label>
@@ -218,7 +237,7 @@
             <div id="message"></div>
         </form>
         <div class="login-link">
-            <p>Already have an account? <a href="/login.html">Login here</a></p>
+            <p>Already have an account? <a href="../emplogin.html">Login here</a></p>
         </div>
         <footer>
             <p>&copy; 2024 ABC Bank. All rights reserved.</p>
@@ -226,4 +245,4 @@
     </div>
     <script src="register.js"></script>
 </body>
-</html> -->
+</html>

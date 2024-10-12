@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -100,7 +100,7 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
+
     <nav class="navbar">
         <ul>
             <li><a href="/UI/register.html" target="_blank"><i class="fas fa-user-plus"></i> Employee Registration</a></li>
@@ -113,10 +113,71 @@
         </ul>
     </nav>
 
-    <!-- Main Content Area -->
+
     <div id="content">
         <h1>Welcome to the Bank Management System</h1>
         <p>Experience efficient banking operations with our state-of-the-art management system. Select an option from the navigation bar to open the respective page in a new tab.</p>
+    </div>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Portal</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .container {
+            text-align: center;
+        }
+        
+        .form-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+        
+        button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+            width: 100%;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Welcome to the Employee Portal</h1>
+            <div class="button-container">
+                <button id="registerBtn" onclick="location.href='/UI/register.html';">Register as Employee</button>
+                <button id="loginBtn" onclick="location.href='emplogin.html';">Login</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>

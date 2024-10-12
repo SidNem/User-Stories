@@ -158,7 +158,7 @@
             </div>
             <div class="form-actions">
                 <button type="button" id="update">Update</button>
-                <button type="button" class="cancel">Cancel</button>
+                <button type="button" class="cancel" id="cancel">Cancel</button>
             </div>
         </form>
     </div>
@@ -265,6 +265,11 @@
                 alert("Customer not found in the list.");
             }
         });
+
+        document.getElementById('cancel').addEventListener('click', function () {
+            window.history.back();
+            console.log("Cancel button pressed")
+        })
 
     </script>
 </body>

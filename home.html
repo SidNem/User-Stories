@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -97,14 +97,155 @@
         <h2>Delete Customer</h2>
     </a>
 
-    <a href="#feature5" class="card" id="feature5">
+    <a href="transaction.html" class="card" id="feature5">
         <img src="https://via.placeholder.com/50" alt="Feature 5 Icon">
-        <h2>Feature 5</h2>
+        <h2>Transaction</h2>
     </a>
 
     <a href="#feature6" class="card" id="feature6">
         <img src="https://via.placeholder.com/50" alt="Feature 6 Icon">
         <h2>Feature 6</h2>
+    </a>
+
+</div>
+
+<footer>
+    <p>&copy; 2024 Employee Portal. All rights reserved.</p>
+</footer>
+
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Home Page</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #ecf0f1;
+            --card-color: #ffffff;
+            --text-color: #333333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            flex-grow: 1;
+        }
+        .card {
+            background: var(--card-color);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        .card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        .card:hover img {
+            transform: scale(1.1);
+        }
+        .card h2 {
+            margin: 0;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            margin-top: auto;
+        }
+        @media (max-width: 600px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Employee Portal</h1>
+</header>
+
+<div class="container">
+
+
+
+
+    <a href="cm.html" class="card" id="feature1">
+        <img src="/assests/user.png" alt="Create Customer Icon">
+        <h2>Create New Customer</h2>
+    </a>
+
+    <a href="editCustomer.html" class="card" id="feature3">
+        <img src="/assests/edit.png" alt="Feature 3 Icon">
+        <h2>Edit Customer</h2>
+    </a>
+
+    <a href="deleteCustomer.html" class="card" id="feature4">
+        <img src="/assests/delete.png" alt="Feature 4 Icon">
+        <h2>Delete Customer</h2>
+    </a>
+
+    <a href="transaction.html" class="card" id="feature5">
+        <img src="/assests/transaction.png" alt="Feature 5 Icon">
+        <h2>Transaction</h2>
+    </a>
+
+    <a href="loanManagement.html" class="card" id="feature2">
+        <img src="/assests/loan.png" alt="Feature 2 Icon">
+        <h2>Loan Management</h2>
+    </a>
+
+    <a href="viewCustomers.html" class="card" id="feature2">
+        <img src="/assests/view-user.png" alt="Feature 2 Icon">
+        <h2>View Customers</h2>
     </a>
 
 </div>

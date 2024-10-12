@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -10,63 +10,626 @@
 
 <body>
     <div class="container">
-        <h1>Loan Management System</ h1> <!-- Buttons toshowforms -->
-            <div class="button-group">
-                <button onclick="showForm('initiate')">Initiate Loan</button> <button
-                    onclick="showForm('update')">Update
-                    Loan</button> <button onclick="showForm('cancel')">Cancel Loan</button>
-            </div> <!-- LoanInitiation
-    form-->
-            <div class="form-container" id="initiate-form">
-                <h2>Initiate Loan
-                    Request</h2>
-                <form>
-                    <label for="customerName">Customer
-                        Name:</label> <input type="text" id="customerName" placeholder="Enter customer name" required>
-                    <label for="ssn">CustomerSSN: </label> <input type="text" id="ssn" placeholder="Enter SSN" required>
-                    <label for="loanAmount">Loan Amount:</label> <input type="number" id="loanAmount"
-                        placeholder="EnterLoanAmount" required>
-                    <label for="loanTerm">LoanTerm(Months):</label> <input type="text" id="loanTerm"
-                        placeholder="Enter Loan Term" required>
-                    <button type="button">Submit Loan Request</button>
-                </form>
-            </div> <!-- Update/cancel loanrequest -->
-            <div class="form-container" id="update-form">
-                <h2>Update loan request</h2>
-                <form>
-                    <label for="loanId">Loan Id:</label> <input type="text" id="loanId" placeholder="Enter loan ID"
-                        required>
-                    <label for="updateInfo">Update Information:</label> <textarea id="updateInfo"
-                        placeholder="Enter update information"></textarea>> <button type="button"
-                        class="update-btn">Update Loan Request</button>
-                </form>
-            </div> <!-- Cancel loanrequest -->
-            <div class="form-container" id="cancel-form">
-                <h2>Cancel loanrequest</h2>
-                <form>
-                    <label for="loanIdCancel">LoanId:</label> <input type="text" id="loanIdCancel"
-                        placeholder="Enter loan ID" required>
-                    <button type="button" class="cancel-btn">Cancel Loan Request</button>
-                </form>
-            </div>
+        <h1>Loan Management System</h1>
+        <div class="button-group">
+            <button onclick="showForm('initiate')">Initiate Loan</button>
+            <button onclick="showForm('update')">Update Loan</button>
+            <button onclick="showForm('cancel')">Cancel Loan</button>
+        </div>
+
+        <div class="form-container" id="initiate-form">
+            <h2>Initiate Loan Request</h2>
+
+            <form id="loanForm">
+                <label for="customerName">Customer Name:</label>
+                <input type="text" id="customerName" placeholder="Enter customer name" required>
+
+                <label for="customerOccupation">Customer Occupation:</label>
+                <input type="text" id="customerOccupation" placeholder="Enter customer occupation" required>
+
+                <label for="employerName">Employer Name:</label>
+                <input type="text" id="employerName" name="employerName" required>
+
+                <label for="employerAddress">Employer Address:</label>
+                <textarea id="employerAddress" name="employerAddress" rows="3" cols="30" required></textarea>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" rows="3" cols="30" required></textarea>
+
+                <label for="maritalStatus">Marital Status:</label>
+                <select id="maritalStatus" name="maritalStatus" required>
+                    <option value="single">Single</option>
+                    <option value="married">Married</option>
+                    <option value="divorced">Divorced</option>
+                    <option value="widowed">Widowed</option>
+                </select>
+
+                <label for="contactNumber">Contact Number:</label>
+                <input type="tel" id="contactNumber" name="contactNumber" required pattern="[0-9]{10}" placeholder="1234567890">
+
+                <label for="ssn">Customer SSN:</label>
+                <input type="text" id="ssn" placeholder="Enter SSN" required>
+
+                <label for="loanAmount">Loan Amount:</label>
+                <input type="number" id="loanAmount" placeholder="Enter Loan Amount" required>
+
+                <label for="loanTerm">Loan Term (Months):</label>
+                <input type="text" id="loanTerm" placeholder="Enter Loan Term" required>
+
+                <button type="button" onclick="submitLoan()">Submit Loan Request</button>
+            </form>
+        </div>
+
+
+        <div class="form-container" id="update-form">
+            <h2>Update Loan Request</h2>
+            <form id="updateForm">
+                <label for="updateLoanId">Loan ID:</label>
+                <input type="text" id="updateLoanId" required>
+                
+                <label for="updateField">Field to Update:</label>
+                <select id="updateField" required>
+                    <option value="customerName">Customer Name</option>
+                    <option value="customerOccupation">Customer Occupation</option>
+                    <option value="employerName">Employer Name</option>
+                    <option value="employerAddress">Employer Address</option>
+                    <option value="email">Email</option>
+                    <option value="address">Address</option>
+                    <option value="maritalStatus">Marital Status</option>
+                    <option value="contactNumber">Contact Number</option>
+                    <option value="loanAmount">Loan Amount</option>
+                    <option value="loanTerm">Loan Term</option>
+                </select>
+                
+                <label for="updateValue">New Value:</label>
+                <input type="text" id="updateValue" required>
+                
+                <input type="submit" value="Update Loan">
+            </form>
+        </div>
+
+        <div class="form-container" id="cancel-form">
+            <h2>Cancel loan request</h2>
+            <form>
+                <label for="loanIdCancel">LoanId:</label>
+                <input type="text" id="loanIdCancel" placeholder="Enter loan ID" required>
+                <button type="button" class="cancel-btn" onclick="cancelLoan()">Cancel Loan Request</button>
+            </form>
+        </div>
     </div>
+
     <script>
+
+
+
+
+        // Function to generate random Loan ID and ensure it's unique
+        function generateUniqueLoanId(existingLoans) {
+            let loanId;
+            do {
+                loanId = 'LN' + Math.floor(Math.random() * 1000000000); // Generate random 9-digit number prefixed with 'LN'
+            } while (existingLoans.some(loan => loan.loanId === loanId)); // Ensure it's unique
+            return loanId;
+        }
+
+        // Function to get existing loan applications from localStorage
+        function getExistingLoans() {
+            const loans = localStorage.getItem('loans');
+            return loans ? JSON.parse(loans) : []; // Return parsed array or an empty array if no data
+        }
+
+        // Function to validate and submit the loan application
+        function submitLoan() {
+            const customerName = document.getElementById("customerName").value;
+            const customerOccupation = document.getElementById("customerOccupation").value;
+            const employerName = document.getElementById("employerName").value;
+            const employerAddress = document.getElementById("employerAddress").value;
+            const email = document.getElementById("email").value;
+            const address = document.getElementById("address").value;
+            const maritalStatus = document.getElementById("maritalStatus").value;
+            const contactNumber = document.getElementById("contactNumber").value;
+            const ssn = document.getElementById("ssn").value;
+            const loanAmount = parseFloat(document.getElementById("loanAmount").value);
+            const loanTerm = parseInt(document.getElementById("loanTerm").value);
+
+            // Validation for loan amount and loan term
+            if (isNaN(loanAmount) || loanAmount <= 0) {
+                alert("Please enter a valid Loan Amount greater than 0.");
+                return;
+            }
+
+            if (isNaN(loanTerm) || loanTerm <= 0) {
+                alert("Please enter a valid Loan Term in months greater than 0.");
+                return;
+            }
+
+            // Get existing loans from localStorage
+            const existingLoans = getExistingLoans();
+
+            // Generate unique Loan ID
+            const loanId = generateUniqueLoanId(existingLoans);
+
+            // Create loan application object
+            const loanApplication = {
+                loanId: loanId,
+                customerName: customerName,
+                customerOccupation: customerOccupation,
+                employerName: employerName,
+                employerAddress: employerAddress,
+                email: email,
+                address: address,
+                maritalStatus: maritalStatus,
+                contactNumber: contactNumber,
+                ssn: ssn,
+                loanAmount: loanAmount,
+                loanTerm: loanTerm
+            };
+
+            // Add the new loan application to the existing list of loans
+            existingLoans.push(loanApplication);
+
+            // Store the updated loans list in localStorage
+            localStorage.setItem('loans', JSON.stringify(existingLoans));
+
+            // Confirmation and clearing the form
+            alert("Loan application submitted successfully with Loan ID: " + loanId);
+            console.log("Loan Application Data:", loanApplication);
+
+            // Clear the form after submission
+            document.getElementById("loanForm").reset();
+        }
+
+        // Update loan functionality
+      
+
+        document.getElementById('updateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const loanId = document.getElementById('updateLoanId').value;
+            const field = document.getElementById('updateField').value;
+            const value = document.getElementById('updateValue').value;
+            
+            const existingLoans = getExistingLoans();
+            const loanIndex = existingLoans.findIndex(loan => loan.loanId === loanId);
+            
+            if (loanIndex === -1) {
+                alert(`Loan with ID ${loanId} not found.`);
+                return;
+            }
+            
+            existingLoans[loanIndex][field] = value;
+            localStorage.setItem('loans', JSON.stringify(existingLoans));
+            
+            alert(`Loan ${loanId} updated successfully.`);
+            this.reset();
+        });
+        
+
+        function cancelLoan() {
+            let loanId = document.getElementById('loanIdCancel').value;
+            if (!loanId) {
+                alert("Please enter a Loan ID.");
+                return;
+            }
+
+            // Retrieve all loans from localStorage
+            const existingLoans = JSON.parse(localStorage.getItem('loans')) || [];
+
+            // Find the loan object by loanId
+            const loanIndex = existingLoans.findIndex(loan => loan.loanId === loanId);
+
+            // Check if the loan exists
+            if (loanIndex === -1) {
+                alert("Loan with ID " + loanId + " not found.");
+                return;
+            }
+
+            // Remove the loan object from the array
+            existingLoans.splice(loanIndex, 1);
+
+            // Update the localStorage with the new array (after deletion)
+            localStorage.setItem('loans', JSON.stringify(existingLoans));
+
+            // Confirm deletion
+            alert("Loan with ID " + loanId + " has been deleted.");
+
+            // Optionally, clear the input field after deletion
+            document.getElementById("loanIdCancel").value = "";
+        }
+
         function showForm(formType) {
-            //hide allforms document.getElementById('initiate-form').style.display=
-            'none'; document.getElementById('update-form').style.display = 'none';
-            document.getElementById('cancel-form').style.display = 'none'; //showthe selectedform 
+            // Hide all forms
+            document.getElementById('initiate-form').style.display = 'none';
+            document.getElementById('update-form').style.display = 'none';
+            document.getElementById('cancel-form').style.display = 'none';
+
+            // Show the selected form
             if (formType === 'initiate') {
                 document.getElementById('initiate-form').style.display = 'block';
-            } else
-                if (formType === 'update') {
-                    document.getElementById('update-form').style.display = 'block';
-                }
-                else if (formType === 'cancel') {
-                    document.getElementById('cancel-form').style.display = 'block';
-                }
+            } else if (formType === 'update') {
+                document.getElementById('update-form').style.display = 'block';
+            } else if (formType === 'cancel') {
+                document.getElementById('cancel-form').style.display = 'block';
+            }
         }
-        //hide allformbydefault onpgload window.onload= function()
-        {
+
+        // Hide all forms by default on page load
+        window.onload = function () {
+            document.getElementById('initiate-form').style.display = 'none';
+            document.getElementById('update-form').style.display = 'none';
+            document.getElementById('cancel-form').style.display = 'none';
+        };
+    </script>
+</body>
+
+</html> -->
+
+
+
+
+<!--New UI -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+     
+        body {
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 700px; /* Increased from 500px to 700px */
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        .form-container {
+            display: none;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            color: #444;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        label {
+            font-size: 0.9rem;
+            color: black;
+            font-weight: bold;
+            
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        
+        .cancel-btn {
+            background-color: #dc3545;
+        }
+        
+        .cancel-btn:hover {
+            background-color: #c82333;
+        }
+        
+        input[type="submit"], button[type="button"] {
+            margin-top: 10px;
+            padding: 12px 0;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Loan Management System</h1>
+
+        <div class="button-group">
+            <button onclick="showForm('initiate')">Initiate Loan</button>
+            <button onclick="showForm('update')">Update Loan</button>
+            <button onclick="showForm('cancel')">Cancel Loan</button>
+        </div>
+
+        <!-- Initiate Loan Form -->
+        <div class="form-container" id="initiate-form">
+            <h2>Initiate Loan Request</h2>
+            <form id="loanForm">
+                <label for="customerName">Customer Name:</label>
+                <input type="text" id="customerName" placeholder="Enter customer name" required>
+
+                <label for="customerOccupation">Customer Occupation:</label>
+                <input type="text" id="customerOccupation" placeholder="Enter customer occupation" required>
+
+                <label for="employerName">Employer Name:</label>
+                <input type="text" id="employerName" name="employerName" required>
+
+                <label for="employerAddress">Employer Address:</label>
+                <textarea id="employerAddress" name="employerAddress" rows="3" required></textarea>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" rows="3" required></textarea>
+
+                <label for="maritalStatus">Marital Status:</label>
+                <select id="maritalStatus" name="maritalStatus" required>
+                    <option value="single">Single</option>
+                    <option value="married">Married</option>
+                    <option value="divorced">Divorced</option>
+                    <option value="widowed">Widowed</option>
+                </select>
+
+                <label for="contactNumber">Contact Number:</label>
+                <input type="tel" id="contactNumber" name="contactNumber" required pattern="[0-9]{10}" placeholder="1234567890">
+
+                <label for="ssn">Customer SSN:</label>
+                <input type="text" id="ssn" placeholder="Enter SSN" required>
+
+                <label for="loanAmount">Loan Amount:</label>
+                <input type="number" id="loanAmount" placeholder="Enter Loan Amount" required>
+
+                <label for="loanTerm">Loan Term (Months):</label>
+                <input type="text" id="loanTerm" placeholder="Enter Loan Term" required>
+
+                <button type="button" onclick="submitLoan()">Submit Loan Request</button>
+            </form>
+        </div>
+
+        <!-- Update Loan Form -->
+        <div class="form-container" id="update-form">
+            <h2>Update Loan Request</h2>
+            <form id="updateForm">
+                <label for="updateLoanId">Loan ID:</label>
+                <input type="text" id="updateLoanId" required>
+
+                <label for="updateField">Field to Update:</label>
+                <select id="updateField" required>
+                    <option value="customerName">Customer Name</option>
+                    <option value="customerOccupation">Customer Occupation</option>
+                    <option value="employerName">Employer Name</option>
+                    <option value="employerAddress">Employer Address</option>
+                    <option value="email">Email</option>
+                    <option value="address">Address</option>
+                    <option value="maritalStatus">Marital Status</option>
+                    <option value="contactNumber">Contact Number</option>
+                    <option value="loanAmount">Loan Amount</option>
+                    <option value="loanTerm">Loan Term</option>
+                </select>
+
+                <label for="updateValue">New Value:</label>
+                <input type="text" id="updateValue" required>
+
+                <input type="submit" value="Update Loan">
+            </form>
+        </div>
+
+        <!-- Cancel Loan Form -->
+        <div class="form-container" id="cancel-form">
+            <h2>Cancel Loan Request</h2>
+            <form>
+                <label for="loanIdCancel">Loan ID:</label>
+                <input type="text" id="loanIdCancel" placeholder="Enter Loan ID" required>
+                <button type="button" class="cancel-btn" onclick="cancelLoan()">Cancel Loan Request</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+
+                // Function to generate random Loan ID and ensure it's unique
+                function generateUniqueLoanId(existingLoans) {
+                    let loanId;
+                    do {
+                        loanId = 'LN' + Math.floor(Math.random() * 1000000000); // Generate random 9-digit number prefixed with 'LN'
+                    } while (existingLoans.some(loan => loan.loanId === loanId)); // Ensure it's unique
+                    return loanId;
+                }
+        
+                // Function to get existing loan applications from localStorage
+                function getExistingLoans() {
+                    const loans = localStorage.getItem('loans');
+                    return loans ? JSON.parse(loans) : []; // Return parsed array or an empty array if no data
+                }
+        
+                // Function to validate and submit the loan application
+                function submitLoan() {
+                    const customerName = document.getElementById("customerName").value;
+                    const customerOccupation = document.getElementById("customerOccupation").value;
+                    const employerName = document.getElementById("employerName").value;
+                    const employerAddress = document.getElementById("employerAddress").value;
+                    const email = document.getElementById("email").value;
+                    const address = document.getElementById("address").value;
+                    const maritalStatus = document.getElementById("maritalStatus").value;
+                    const contactNumber = document.getElementById("contactNumber").value;
+                    const ssn = document.getElementById("ssn").value;
+                    const loanAmount = parseFloat(document.getElementById("loanAmount").value);
+                    const loanTerm = parseInt(document.getElementById("loanTerm").value);
+        
+                    // Validation for loan amount and loan term
+                    if (isNaN(loanAmount) || loanAmount <= 0) {
+                        alert("Please enter a valid Loan Amount greater than 0.");
+                        return;
+                    }
+        
+                    if (isNaN(loanTerm) || loanTerm <= 0) {
+                        alert("Please enter a valid Loan Term in months greater than 0.");
+                        return;
+                    }
+        
+                    // Get existing loans from localStorage
+                    const existingLoans = getExistingLoans();
+        
+                    // Generate unique Loan ID
+                    const loanId = generateUniqueLoanId(existingLoans);
+        
+                    // Create loan application object
+                    const loanApplication = {
+                        loanId: loanId,
+                        customerName: customerName,
+                        customerOccupation: customerOccupation,
+                        employerName: employerName,
+                        employerAddress: employerAddress,
+                        email: email,
+                        address: address,
+                        maritalStatus: maritalStatus,
+                        contactNumber: contactNumber,
+                        ssn: ssn,
+                        loanAmount: loanAmount,
+                        loanTerm: loanTerm
+                    };
+        
+                    // Add the new loan application to the existing list of loans
+                    existingLoans.push(loanApplication);
+        
+                    // Store the updated loans list in localStorage
+                    localStorage.setItem('loans', JSON.stringify(existingLoans));
+        
+                    // Confirmation and clearing the form
+                    alert("Loan application submitted successfully with Loan ID: " + loanId);
+                    console.log("Loan Application Data:", loanApplication);
+        
+                    // Clear the form after submission
+                    document.getElementById("loanForm").reset();
+                }
+        
+                // Update loan functionality
+              
+        
+                document.getElementById('updateForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const loanId = document.getElementById('updateLoanId').value;
+                    const field = document.getElementById('updateField').value;
+                    const value = document.getElementById('updateValue').value;
+                    
+                    const existingLoans = getExistingLoans();
+                    const loanIndex = existingLoans.findIndex(loan => loan.loanId === loanId);
+                    
+                    if (loanIndex === -1) {
+                        alert(`Loan with ID ${loanId} not found.`);
+                        return;
+                    }
+                    
+                    existingLoans[loanIndex][field] = value;
+                    localStorage.setItem('loans', JSON.stringify(existingLoans));
+                    
+                    alert(`Loan ${loanId} updated successfully.`);
+                    this.reset();
+                });
+                
+        
+                function cancelLoan() {
+                    let loanId = document.getElementById('loanIdCancel').value;
+                    if (!loanId) {
+                        alert("Please enter a Loan ID.");
+                        return;
+                    }
+        
+                    // Retrieve all loans from localStorage
+                    const existingLoans = JSON.parse(localStorage.getItem('loans')) || [];
+        
+                    // Find the loan object by loanId
+                    const loanIndex = existingLoans.findIndex(loan => loan.loanId === loanId);
+        
+                    // Check if the loan exists
+                    if (loanIndex === -1) {
+                        alert("Loan with ID " + loanId + " not found.");
+                        return;
+                    }
+        
+                    // Remove the loan object from the array
+                    existingLoans.splice(loanIndex, 1);
+        
+                    // Update the localStorage with the new array (after deletion)
+                    localStorage.setItem('loans', JSON.stringify(existingLoans));
+        
+                    // Confirm deletion
+                    alert("Loan with ID " + loanId + " has been deleted.");
+        
+                    // Optionally, clear the input field after deletion
+                    document.getElementById("loanIdCancel").value = "";
+                }
+        // JavaScript functionality remains the same
+        function showForm(formType) {
+            document.getElementById('initiate-form').style.display = 'none';
+            document.getElementById('update-form').style.display = 'none';
+            document.getElementById('cancel-form').style.display = 'none';
+
+            if (formType === 'initiate') {
+                document.getElementById('initiate-form').style.display = 'block';
+            } else if (formType === 'update') {
+                document.getElementById('update-form').style.display = 'block';
+            } else if (formType === 'cancel') {
+                document.getElementById('cancel-form').style.display = 'block';
+            }
+        }
+
+        window.onload = function () {
             document.getElementById('initiate-form').style.display = 'none';
             document.getElementById('update-form').style.display = 'none';
             document.getElementById('cancel-form').style.display = 'none';

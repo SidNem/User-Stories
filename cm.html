@@ -329,31 +329,30 @@
         function generateUniqueSSN() {
             let ssn;
             const customers = JSON.parse(localStorage.getItem('customers')) || [];
-
+    
             do {
                 ssn = Math.floor(1000000000 + Math.random() * 9000000000).toString(); // Generate a random 10-digit number
             } while (customers.some(customer => customer.ssn === ssn)); // Check if SSN already exists
-
+    
             return ssn;
         }
-
-                    // Generate a unique SSN
-                    const ssn = generateUniqueSSN();
-                    document.getElementById('ssn').value = ssn; // Set the SSN field
-
+    
+        // Generate a unique SSN when the form loads for the first time
+        const ssn = generateUniqueSSN();
+        document.getElementById('ssn').value = ssn; // Set the SSN field with the unique value
+    
+        // Form submission handling
         document.getElementById('registrationForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent form submission
-
+    
             // Clear previous error messages
             document.getElementById('accountNumberError').innerText = '';
             document.getElementById('ifscError').innerText = '';
             document.getElementById('panError').innerText = '';
-
-
-
+    
             // Get input values
             const customerData = {
-                ssn: ssn,
+                ssn: document.getElementById('ssn').value, // Use the SSN already set
                 name: document.getElementById('name').value,
                 accountNumber: document.getElementById('accountNumber').value,
                 dob: document.getElementById('dob').value,
@@ -367,50 +366,56 @@
                 adhaar: document.getElementById('adhaar').value,
                 pan: document.getElementById('pan').value,
             };
-
+    
             let valid = true;
-
+    
             // Validate account number (11 to 16 digits)
             const accountNumberPattern = /^\d{11,16}$/;
             if (!accountNumberPattern.test(customerData.accountNumber)) {
                 document.getElementById('accountNumberError').innerText = 'Account Number must be between 11 to 16 digits.';
                 valid = false;
             }
-
+    
             // Validate IFSC code (XXXX0YYYYYY)
             const ifscPattern = /^[A-Z]{4}0[A-Z0-9]{6}$/; // 4 letters, 0, 6 alphanumeric
             if (!ifscPattern.test(customerData.ifsc)) {
                 document.getElementById('ifscError').innerText = 'IFSC Code must be in the format XXXX0YYYYYY (4 letters, followed by 0, then 6 alphanumeric characters).';
                 valid = false;
             }
-
+    
             // Validate PAN (10 characters, specific format)
             const panPattern = /^[A-Z]{5}\d{4}[A-Z]{1}$/; // Format: ABCDE1234F
             if (!panPattern.test(customerData.pan)) {
                 document.getElementById('panError').innerText = 'PAN must be in the format ABCDE1234F.';
                 valid = false;
             }
-
+    
             // If all validations pass, store the data
             if (valid) {
                 // Retrieve existing customers or initialize as an empty array
                 const customers = JSON.parse(localStorage.getItem('customers')) || [];
-
+    
                 // Add the new customer data to the array
                 customers.push(customerData);
-
+    
                 // Store updated customers array in localStorage
                 localStorage.setItem('customers', JSON.stringify(customers));
-
+    
                 // Notify the user
                 alert('Customer Registration Successful');
-
+    
                 // Clear the form after submission
                 document.getElementById('registrationForm').reset();
-                document.getElementById('ssn').value = generateUniqueSSN(); // Generate a new SSN for next entry
+                
+                // Generate and set a new SSN for the next registration
+                const newSsn = generateUniqueSSN();
+                document.getElementById('ssn').value = newSsn;
             }
         });
     </script>
+    
+
+   
 </body>
 
 </html>

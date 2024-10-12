@@ -1,0 +1,437 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            padding: 20px;
+            max-width: 600px;
+        }
+
+        form {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        textarea {
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Transaction Details Form</h2>
+
+<form id="transactionForm">
+    <label for="transaction_id">Transaction ID:</label>
+    <input type="text" id="transaction_id" name="transaction_id" required readonly>
+
+    <label for="ssn_id">Customer SSN ID:</label>
+    <input type="text" id="ssn_id" name="ssn_id" required>
+
+    <label for="customer_name">Customer Name:</label>
+    <input type="text" id="customer_name" name="customer_name" required>
+
+    <label for="account_id">Account ID:</label>
+    <input type="text" id="account_id" name="account_id" required>
+
+    <label for="accountNumber">Account Number:</label>
+    <input type="text" id="accountNumber" name="accountNumber" required>
+    <div id="accountNumberError" class="error"></div>
+
+    <label for="aadhaar">Aadhaar Card No.:</label>
+    <input type="text" id="aadhaar" name="aadhaar" required>
+
+    <label for="pan_card">PAN Card No.:</label>
+    <input type="text" id="pan_card" name="pan" required>
+    <div id="panError" class="error"></div>
+
+    <label for="address">Address:</label>
+    <textarea id="address" name="address" rows="4" required></textarea>
+
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" required>
+
+    <label for="contact_number">Contact Number:</label>
+    <input type="tel" id="contact_number" name="contact_number" required>
+
+    <label for="mode_of_transaction">Mode of Transaction:</label>
+    <select id="mode_of_transaction" name="mode_of_transaction" required>
+        <option value="online">Online</option>
+        <option value="cheque">Cheque</option>
+        <option value="cash">Cash</option>
+        <option value="card">Card</option>
+    </select>
+
+    <label for="amount">Amount of Transaction:</label>
+    <input type="number" id="amount" name="amount" required>
+
+    <label for="credit_debit">Credit / Debit:</label>
+    <select id="credit_debit" name="credit_debit" required>
+        <option value="credit">Credit</option>
+        <option value="debit">Debit</option>
+    </select>
+
+    
+    <button type="button" onclick="validateAndSubmit()">Submit</button>
+</form>
+
+<script>
+    // Function to generate a random 5-digit transaction ID
+    function generateTransactionId() {
+        return Math.floor(10000 + Math.random() * 90000); // Generates a number between 10000 and 99999
+    }
+    
+    // Set the transaction ID when the page loads
+    window.onload = function() {
+        document.getElementById('transaction_id').value = generateTransactionId();
+    };
+
+    function validateAndSubmit() {
+        let valid = true;
+
+        let transactionId = document.getElementById('transaction_id').value;
+        let customerName = document.getElementById('customer_name').value;
+        let amount = document.getElementById('amount').value;
+
+        // Clear previous error messages
+        document.getElementById('accountNumberError').innerText = '';
+        document.getElementById('panError').innerText = '';
+
+        // Retrieve form data
+        const accountNumber = document.getElementById('accountNumber').value;
+        const pan = document.getElementById('pan_card').value;
+
+        // Validate account number (11 to 16 digits)
+        const accountNumberPattern = /^\d{11,16}$/;
+        if (!accountNumberPattern.test(accountNumber)) {
+            document.getElementById('accountNumberError').innerText = 'Account Number must be between 11 to 16 digits.';
+            valid = false;
+        }
+
+        // Simple validation checks
+        if (transactionId === "" || customerName === "" || amount <= 0) {
+            alert("Please fill in all required fields and ensure the amount is positive.");
+            valid = false; // Prevent form submission
+        }
+
+        // Validate PAN (10 characters, specific format)
+        const panPattern = /^[A-Z]{5}\d{4}[A-Z]{1}$/; // Format: ABCDE1234F
+        if (!panPattern.test(pan)) {
+            document.getElementById('panError').innerText = 'PAN must be in the format ABCDE1234F.';
+            valid = false;
+        }
+
+        // If validation passes, alert success message
+        if (valid) {
+            saveDataToLocalStorage();
+
+            // Clear the form after submission
+            document.getElementById('transactionForm').reset();
+                
+            // Generate new transaction ID
+            document.getElementById('transaction_id').value = generateTransactionId();
+        }
+    }
+
+    function saveDataToLocalStorage() {
+        // Create an object to store form data
+        const formData = {
+            transaction_id: document.getElementById('transaction_id').value,
+            ssn_id: document.getElementById('ssn_id').value,
+            customer_name: document.getElementById('customer_name').value,
+            account_id: document.getElementById('account_id').value,
+            accountNumber: document.getElementById('accountNumber').value,
+            aadhaar: document.getElementById('aadhaar').value,
+            pan: document.getElementById('pan_card').value,
+            address: document.getElementById('address').value,
+            date: document.getElementById('date').value,
+            contact_number: document.getElementById('contact_number').value,
+            mode_of_transaction: document.getElementById('mode_of_transaction').value,
+            amount: document.getElementById('amount').value,
+            credit_debit: document.getElementById('credit_debit').value
+        };
+    
+        // Retrieve existing transactions from local storage or create an empty array if none exist
+        let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+    
+        // Add the new transaction to the array
+        transactions.push(formData);
+    
+        // Save the updated array back to local storage
+        localStorage.setItem('transactions', JSON.stringify(transactions));
+    
+        alert("Transaction executed Successfully!");
+    }
+    
+</script>
+
+</body>
+</html> -->
+
+<!--New UI-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Form</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #ecf0f1;
+            --error-color: #e74c3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        form {
+            display: grid;
+            gap: 1rem;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        .error {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Transaction Details</h2>
+        <form id="transactionForm">
+            <label for="transaction_id">Transaction ID</label>
+            <input type="text" id="transaction_id" name="transaction_id" required readonly>
+
+            <label for="ssn_id">Customer SSN ID</label>
+            <input type="text" id="ssn_id" name="ssn_id" required>
+
+            <label for="customer_name">Customer Name</label>
+            <input type="text" id="customer_name" name="customer_name" required>
+
+            <label for="account_id">Account ID</label>
+            <input type="text" id="account_id" name="account_id" required>
+
+            <label for="accountNumber">Account Number</label>
+            <input type="text" id="accountNumber" name="accountNumber" required>
+            <div id="accountNumberError" class="error"></div>
+
+            <label for="aadhaar">Aadhaar Card No.</label>
+            <input type="text" id="aadhaar" name="aadhaar" required>
+
+            <label for="pan_card">PAN Card No.</label>
+            <input type="text" id="pan_card" name="pan" required>
+            <div id="panError" class="error"></div>
+
+            <label for="address">Address</label>
+            <textarea id="address" name="address" rows="4" required></textarea>
+
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="contact_number">Contact Number</label>
+            <input type="tel" id="contact_number" name="contact_number" required>
+
+            <label for="mode_of_transaction">Mode of Transaction</label>
+            <select id="mode_of_transaction" name="mode_of_transaction" required>
+                <option value="online">Online</option>
+                <option value="cheque">Cheque</option>
+                <option value="cash">Cash</option>
+                <option value="card">Card</option>
+            </select>
+
+            <label for="amount">Amount of Transaction</label>
+            <input type="number" id="amount" name="amount" required>
+
+            <label for="credit_debit">Credit / Debit</label>
+            <select id="credit_debit" name="credit_debit" required>
+                <option value="credit">Credit</option>
+                <option value="debit">Debit</option>
+            </select>
+
+            <button type="button" onclick="validateAndSubmit()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function generateTransactionId() {
+            return Math.floor(10000 + Math.random() * 90000);
+        }
+        
+        window.onload = function() {
+            document.getElementById('transaction_id').value = generateTransactionId();
+        };
+
+        function validateAndSubmit() {
+            let valid = true;
+
+            let transactionId = document.getElementById('transaction_id').value;
+            let customerName = document.getElementById('customer_name').value;
+            let amount = document.getElementById('amount').value;
+
+            document.getElementById('accountNumberError').innerText = '';
+            document.getElementById('panError').innerText = '';
+
+            const accountNumber = document.getElementById('accountNumber').value;
+            const pan = document.getElementById('pan_card').value;
+
+            const accountNumberPattern = /^\d{11,16}$/;
+            if (!accountNumberPattern.test(accountNumber)) {
+                document.getElementById('accountNumberError').innerText = 'Account Number must be between 11 to 16 digits.';
+                valid = false;
+            }
+
+            if (transactionId === "" || customerName === "" || amount <= 0) {
+                alert("Please fill in all required fields and ensure the amount is positive.");
+                valid = false;
+            }
+
+            const panPattern = /^[A-Z]{5}\d{4}[A-Z]{1}$/;
+            if (!panPattern.test(pan)) {
+                document.getElementById('panError').innerText = 'PAN must be in the format ABCDE1234F.';
+                valid = false;
+            }
+
+            if (valid) {
+                saveDataToLocalStorage();
+                document.getElementById('transactionForm').reset();
+                document.getElementById('transaction_id').value = generateTransactionId();
+            }
+        }
+
+        function saveDataToLocalStorage() {
+            const formData = {
+                transaction_id: document.getElementById('transaction_id').value,
+                ssn_id: document.getElementById('ssn_id').value,
+                customer_name: document.getElementById('customer_name').value,
+                account_id: document.getElementById('account_id').value,
+                accountNumber: document.getElementById('accountNumber').value,
+                aadhaar: document.getElementById('aadhaar').value,
+                pan: document.getElementById('pan_card').value,
+                address: document.getElementById('address').value,
+                date: document.getElementById('date').value,
+                contact_number: document.getElementById('contact_number').value,
+                mode_of_transaction: document.getElementById('mode_of_transaction').value,
+                amount: document.getElementById('amount').value,
+                credit_debit: document.getElementById('credit_debit').value
+            };
+        
+            let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            transactions.push(formData);
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+        
+            alert("Transaction executed Successfully!");
+        }
+    </script>
+</body>
+</html>
