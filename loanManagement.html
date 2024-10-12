@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Loan Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Loan Management System</ h1> <!-- Buttons toshowforms -->
+            <div class="button-group">
+                <button onclick="showForm('initiate')">Initiate Loan</button> <button
+                    onclick="showForm('update')">Update
+                    Loan</button> <button onclick="showForm('cancel')">Cancel Loan</button>
+            </div> <!-- LoanInitiation
+    form-->
+            <div class="form-container" id="initiate-form">
+                <h2>Initiate Loan
+                    Request</h2>
+                <form>
+                    <label for="customerName">Customer
+                        Name:</label> <input type="text" id="customerName" placeholder="Enter customer name" required>
+                    <label for="ssn">CustomerSSN: </label> <input type="text" id="ssn" placeholder="Enter SSN" required>
+                    <label for="loanAmount">Loan Amount:</label> <input type="number" id="loanAmount"
+                        placeholder="EnterLoanAmount" required>
+                    <label for="loanTerm">LoanTerm(Months):</label> <input type="text" id="loanTerm"
+                        placeholder="Enter Loan Term" required>
+                    <button type="button">Submit Loan Request</button>
+                </form>
+            </div> <!-- Update/cancel loanrequest -->
+            <div class="form-container" id="update-form">
+                <h2>Update loan request</h2>
+                <form>
+                    <label for="loanId">Loan Id:</label> <input type="text" id="loanId" placeholder="Enter loan ID"
+                        required>
+                    <label for="updateInfo">Update Information:</label> <textarea id="updateInfo"
+                        placeholder="Enter update information"></textarea>> <button type="button"
+                        class="update-btn">Update Loan Request</button>
+                </form>
+            </div> <!-- Cancel loanrequest -->
+            <div class="form-container" id="cancel-form">
+                <h2>Cancel loanrequest</h2>
+                <form>
+                    <label for="loanIdCancel">LoanId:</label> <input type="text" id="loanIdCancel"
+                        placeholder="Enter loan ID" required>
+                    <button type="button" class="cancel-btn">Cancel Loan Request</button>
+                </form>
+            </div>
+    </div>
+    <script>
+        function showForm(formType) {
+            //hide allforms document.getElementById('initiate-form').style.display=
+            'none'; document.getElementById('update-form').style.display = 'none';
+            document.getElementById('cancel-form').style.display = 'none'; //showthe selectedform 
+            if (formType === 'initiate') {
+                document.getElementById('initiate-form').style.display = 'block';
+            } else
+                if (formType === 'update') {
+                    document.getElementById('update-form').style.display = 'block';
+                }
+                else if (formType === 'cancel') {
+                    document.getElementById('cancel-form').style.display = 'block';
+                }
+        }
+        //hide allformbydefault onpgload window.onload= function()
+        {
+            document.getElementById('initiate-form').style.display = 'none';
+            document.getElementById('update-form').style.display = 'none';
+            document.getElementById('cancel-form').style.display = 'none';
+        };
+    </script>
+</body>
+
+</html>

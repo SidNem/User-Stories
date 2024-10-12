@@ -1,0 +1,275 @@
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Employee Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(toright, blue, pink);
+            color:
+                white;
+            ;
+        }
+
+        .container {
+            margin-top: 100px;
+            max-width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color:
+                #0056b3
+        }
+
+        .alert-custom {
+            display: none;
+            margin-top: 10px;
+        }
+
+        #messagebox {
+            background: #d4edda;
+            display: none;
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="text-center">Employee Login</h2>
+        <form id="loginform">
+            <div class="form-group">
+                <label for= "employeeId">Employee ID</label>
+                <input type="text" class="form-control" id="employeeId"
+                        required maxlength="7" placeholder="Enter 7 digit Employee ID">
+            </div>
+            <div class="form-group">
+                <label for= "password">Password</label>
+                <input type="password" class="form-control" id="password" required
+                        maxlength="30">
+            </div><button type="submit" class="btn-custom">Login</button></form>
+            <div class="alert success" id="messagebox">Employee Login Successful</div>
+    </div>
+    <script>
+        document.getElementById('loginform').addEventListener('submit', function (e) {
+            e.preventDefault(); 
+            const employeeId = document.getElementById('employeeId').value; 
+            const password = document.getElementById('password').value 
+                if (employeeId.length == 7 && password) {
+                const messagebox = document.getElementById('messagebox'); 
+                messagebox.style.display = 'block'; setTimeout(function () { window.location.href = 'login.html'; },
+                        2000);
+            } else { alert("InvalidEmployeeIDorPassword"); }
+        }); </script>
+</body>
+
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --text-color: #333;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-control {
+            border: none;
+            border-bottom: 2px solid #ddd;
+            border-radius: 0;
+            padding: 10px 5px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: var(--primary-color);
+        }
+
+        .btn-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #messagebox {
+            display: none;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .success {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: var(--success-color);
+        }
+
+        .error {
+            background-color: rgba(220, 53, 69, 0.2);
+            color: var(--error-color);
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Employee Login</h2>
+        <form id="loginform">
+            <div class="form-group input-icon">
+                <label for="employeeId">Employee ID</label>
+                <input type="text" class="form-control" id="employeeId" required maxlength="7" placeholder="Enter 7 digit Employee ID">
+                <i class="fas fa-id-card"></i>
+            </div>
+            <div class="form-group input-icon">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" required maxlength="30" placeholder="Enter your password">
+                <i class="fas fa-lock"></i>
+            </div>
+            <button type="submit" class="btn-custom">Login</button>
+        </form>
+        <div id="messagebox"></div>
+    </div>
+
+    <script>
+        document.getElementById('loginform').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const employeeId = document.getElementById('employeeId').value;
+            const password = document.getElementById('password').value;
+            const messagebox = document.getElementById('messagebox');
+
+
+            const empData = localStorage.getItem('register');
+            const empObj = JSON.parse(empData);
+
+            //Uncomment Later
+
+         /*   let flag = 0;
+            
+            for(let i=0;i<empObj.length;i++){
+                console.log(empObj[i].empId);
+                    if(empObj[i].empId == employeeId){
+                        alert("SSN found");
+                        flag = 1;
+                        break;
+                    }
+            }
+            if(!flag){
+                alert("Not found")
+            }*/
+
+            // Convert string back to object
+ 
+
+          if (employeeId.length == 7 && password) {
+                messagebox.textContent = 'Employee Login Successful';
+                messagebox.className = 'success';
+                messagebox.style.display = 'block';
+                setTimeout(function () {
+                    window.location.href = 'home.html';
+                }, 2000);
+            } else {
+                messagebox.textContent = 'Invalid Employee ID or Password';
+                messagebox.className = 'error';
+                messagebox.style.display = 'block';
+                setTimeout(function () {
+                    messagebox.style.display = 'none';
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

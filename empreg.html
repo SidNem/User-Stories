@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>EmployeeRegistration</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(toright, blue, pink);
+            color: white;
+        }
+
+        .container {
+            margin-top: 50px;
+            max-width: 500px;
+        }
+
+        .acknowledgment {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #28a745;
+            background-color: #d4edda;
+            color: green;
+            border-radius: 4px;
+        }
+        
+
+        .success-message {
+            color: green;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            color:
+                green;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding:
+                10px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #0056b3
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="text-center">EmployeeRegistration
+
+        </h2>
+        <div class="acknowledgment" id="acknowledgment">
+            <p class="success-message">Employee Registration Successful</p>
+            <p class="message">Employee ID: <span id="employeeId"></span></p>
+            <p class="message">Name: <span id="employeeName"></span></p>
+            <p class="message">Email: <span id="employeeEmail"></span></p>
+        </div>
+        <form id="registrationform">
+            <div class="form-group">
+                <label for="firstname">First Name</label><input type="text" class="form-control" id="firstname" required
+                        maxlength="50">
+            </div>
+            <div class="form-group">
+                <label for="lastname">LastName</label><input type="text" class="form-control" id="lastname" required
+                        maxlength="50">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label><input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label><input type="password" class="form-control" id="password" required
+                        maxlength="30">
+            </div>
+            <div class="form-group">
+                <label for="confirmpassword">ConfirmPassword</label><input type="password" class="form-control"
+                        id="confirmpassword" required maxlength="30">
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label><textarea class="form-control" id="address" rows="3"
+                        maxlength="100"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="contactnumber">ContactNumber</label><input type="text" class="form-control"
+                        id="contactnumber" required maxlength="10">
+            </div>
+            <button type="submit" class="btn">Register </button></form>
+    </div>
+    <script>
+        let existingIds = newSet();
+
+        function UniqueId() {
+            let id;
+
+            do {
+                id = Math.floor(Math.random() * 1000000);
+            }
+
+            while (existingIds.has(id));
+            existingIds.add(id);
+            returnid;
+        }
+
+        document.getElementById('registrationform').addEventListener('submit', function (e) {
+            console.log('FormSubmissionTriggered'); e.preventDefault(); const firstname = document.getElementById('firstname').value; const lastname = document.getElementById('lastname').value; const email = document.getElementById('email').value; const password = document.getElementById('password').value; const confirmpassword = document.getElementById('confirmpassword').value; if (password !== confirmpassword) {
+                alert('Passwordsdonot match!'); return;
+            }
+
+            const employeeId = UniqueId(); document.getElementById('employeeId').innerText = employeeId; document.getElementById('employeeName').innerText = firstname + " " + lastname;
+            document.getElementById('employeeEmail').innerText = email;
+            document.getElementById('acknowledgment').style.display = 'block'; this.reset();
+        });
+    </script>
+    <script src="https:/code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/jsbootstrap.min.js"></script>
+</body>
+
+</html>

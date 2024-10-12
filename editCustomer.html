@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Customer Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, blue, pink);
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: black;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group input[type="radio"],
+        .form-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .form-actions {
+            text-align: center;
+        }
+
+        .form-actions button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .form-actions button.cancel {
+            background-color: #f44336;
+        }
+
+        .form-actions button.delete {
+            background-color: #ff9800;
+        }
+
+        .form-actions button:hover {
+            opacity: 0.9;
+        }
+
+        .error {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Edit Customer</h1>
+    <div class="container">
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="ssn">Customer SSN Id:</label>
+                <input type="text" id="ssn" name="ssn" required readonly>
+            </div>
+            <div class="form-group">
+                <label for="name">Customer Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your Name" required>
+            </div>
+            <div class="form-group">
+                <label for="accountNumber">Account Number:</label>
+                <input type="text" id="accountNumber" name="accountNumber" placeholder="Enter your Account number"
+                    required>
+                <div class="error" id="accountNumberError"></div>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="maritalStatus">Marital Status:</label>
+                <select id="maritalStatus" name="maritalStatus" required>
+                    <option value="single">Single</option>
+                    <option value="married">Married</option>
+                    <option value="divorced">Divorced</option>
+                    <option value="widowed">Widowed</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="contactNumber">Contact Number:</label>
+                <input type="tel" id="contactNumber" name="contactNumber" pattern="[0-9]{10}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" placeholder="abc@mail.com" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            <div class="form-group">
+                <label for="ifsc">IFSC Code:</label>
+                <input type="text" id="ifsc" name="ifsc" required>
+                <div class="error" id="ifscError"></div>
+            </div>
+            <div class="form-group">
+                <label for="balance">Account Balance:</label>
+                <input type="number" id="balance" name="balance" required>
+            </div>
+            <div class="form-group">
+                <label for="adhaar">Adhaar Card Number:</label>
+                <input type="text" id="adhaar" name="adhaar" pattern="[0-9]{12}"
+                    placeholder="Enter your 12 digit aadhar number" required>
+            </div>
+            <div class="form-group">
+                <label for="pan">PAN Card Number:</label>
+                <input type="text" id="pan" name="pan" required>
+                <div class="error" id="panError"></div>
+            </div>
+            <div class="form-actions">
+                <button type="button" id="update">Update</button>
+                <button type="button" class="cancel">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+
+        let flag = 0;
+        let index;
+
+        let ssnForCompare = prompt("Please Customer ssn", "0");
+
+        const customerData = localStorage.getItem("customers");
+        const customerObj = JSON.parse(customerData);
+
+        for (let i = 0; i < customerObj.length; i++) {
+            if (customerObj[i].ssn == ssnForCompare) {
+                flag = 1;
+                index = i;
+                break;
+            }
+        }
+
+        if (!flag) {
+            alert("SSN Not found Either Wrong SSN or Cutomer doesn't Exists");
+            /*
+                        let name =  document.getElementById('name').innerHTML = "NOT FOUND";
+                        let  accountNumber = document.getElementById('accountNumber').innerHTML = "NOT FOUND";
+                        let dob = document.getElementById('dob').innerHTML = "NOT FOUND";
+                         let gender = document.getElementById('gender').innerHTML = "NOT FOUND";
+                         let maritalStatus =  document.getElementById('maritalStatus').innerHTML = "NOT FOUND";
+                         let contactNumber=  document.getElementById('contactNumber').innerHTML = "NOT FOUND";
+                         let email =  document.getElementById('email').innerHTML = "NOT FOUND";
+                         let address = document.getElementById('address').innerHTML = "NOT FOUND";
+                         let ifsc = document.getElementById('ifsc').innerHTML = "NOT FOUND";
+                         let balance =  document.getElementById('balance').innerHTML = "NOT FOUND";
+                         let adhaar = document.getElementById('adhaar').innerHTML = "NOT FOUND";
+                         let pan =  document.getElementById('pan').innerHTML = "NOT FOUND";
+            
+                         let ssn = document.getElementById('ssn').innerHTML = "NOT FOUND";
+                         */
+
+            let updateButton = document.getElementById('update')
+            update.disabled = true;
+        }
+        else {
+
+            console.log(customerObj[index])
+            let name = document.getElementById('name').value = customerObj[index].name;
+            let accountNumber = document.getElementById('accountNumber').value = customerObj[index].accountNumber;
+            let dob = document.getElementById('dob').value = customerObj[index].dob;
+            let gender = document.getElementById('gender').value = customerObj[index].gender;
+            let maritalStatus = document.getElementById('maritalStatus').value = customerObj[index].maritalStatus;
+            let contactNumber = document.getElementById('contactNumber').value = customerObj[index].contactNumber;
+            let email = document.getElementById('email').value = customerObj[index].email;
+            let address = document.getElementById('address').value = customerObj[index].address;
+            let ifsc = document.getElementById('ifsc').value = customerObj[index].ifsc;
+            let balance = document.getElementById('balance').value = customerObj[index].balance;
+            let adhaar = document.getElementById('adhaar').value = customerObj[index].balance;
+            let pan = document.getElementById('pan').value = customerObj[index].pan;
+
+            let ssn = document.getElementById('ssn').value = ssnForCompare;
+
+
+
+
+
+
+        }
+
+        document.getElementById('update').addEventListener('click', function () {
+            let updatedCustomer = {
+                ssn: ssnForCompare,
+                name: document.getElementById('name').value,
+                accountNumber: document.getElementById('accountNumber').value,
+                dob: document.getElementById('dob').value,
+                gender: document.getElementById('gender').value,
+                maritalStatus: document.getElementById('maritalStatus').value,
+                contactNumber: document.getElementById('contactNumber').value,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
+                ifsc: document.getElementById('ifsc').value,
+                balance: document.getElementById('balance').value,
+                adhaar: document.getElementById('adhaar').value,
+                pan: document.getElementById('pan').value,
+            };
+
+            // Retrieve existing customers from localStorage
+            const customerData = localStorage.getItem("customers");
+            const customerObj = JSON.parse(customerData);
+
+            // Find the index of the customer being updated
+            let index = customerObj.findIndex(customer => customer.ssn === ssnForCompare);
+
+            if (index !== -1) {
+                // Update the customer object in the array
+                customerObj[index] = updatedCustomer;
+
+                // Store the updated array back to localStorage
+                localStorage.setItem("customers", JSON.stringify(customerObj));
+
+                // Optionally, notify the user that the update was successful
+                alert("Customer data updated successfully!");
+            } else {
+                alert("Customer not found in the list.");
+            }
+        });
+
+    </script>
+</body>
+
+</html>

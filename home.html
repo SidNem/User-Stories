@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Home Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px; /* Increased for better spacing */
+            margin: auto;
+            padding: 20px;
+            background: white;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .card {
+            background: #e2e2e2;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            width: calc(33.33% - 20px); /* Changed to fit 3 cards in a row */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, background-color 0.3s;
+            text-decoration: none; /* Remove underline from links */
+            color: #333; /* Default text color */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: #d3d3d3; /* Change background on hover */
+        }
+        .card img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        @media (max-width: 800px) { /* Responsive design for smaller screens */
+            .card {
+                width: calc(50% - 20px); /* 2 cards on medium screens */
+            }
+        }
+        @media (max-width: 500px) {
+            .card {
+                width: calc(100% - 20px); /* 1 card on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome to the Employee Portal</h1>
+</header>
+
+<div class="container">
+
+    <a href="cm.html" class="card" id="feature1">
+        <img src="https://via.placeholder.com/50" alt="Create Customer Icon">
+        <h2>Create New Customer</h2>
+    </a>
+
+    <a href="loanManagement.html" class="card" id="feature2">
+        <img src="https://via.placeholder.com/50" alt="Feature 2 Icon">
+        <h2>Loan Management</h2>
+    </a>
+
+    <a href="editCustomer.html" class="card" id="feature3">
+        <img src="https://via.placeholder.com/50" alt="Feature 3 Icon">
+        <h2>Edit Customer</h2>
+    </a>
+
+    <a href="deleteCustomer.html" class="card" id="feature4">
+        <img src="https://via.placeholder.com/50" alt="Feature 4 Icon">
+        <h2>Delete Customer</h2>
+    </a>
+
+    <a href="#feature5" class="card" id="feature5">
+        <img src="https://via.placeholder.com/50" alt="Feature 5 Icon">
+        <h2>Feature 5</h2>
+    </a>
+
+    <a href="#feature6" class="card" id="feature6">
+        <img src="https://via.placeholder.com/50" alt="Feature 6 Icon">
+        <h2>Feature 6</h2>
+    </a>
+
+</div>
+
+<footer>
+    <p>&copy; 2024 Employee Portal. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

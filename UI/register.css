@@ -1,0 +1,114 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fixing gradient */
+body {
+    background: linear-gradient(to bottom, #89f7fe, #66a6ff);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    font-family: "Arial", sans-serif;
+}
+
+
+/* Add responsive styling */
+@media (max-width: 768px) {
+    #mainCont {
+        width: 90%; /* Responsive width */
+    }
+}
+
+header {
+    margin: 1rem;
+}
+
+h1 {
+    align-items: center;
+    font-size: 2rem;
+}
+
+#mainCont {
+    width: 600px;
+    border-radius: 1rem;
+    box-shadow: 0 4px20pxrgba(0, 0, 0, 0.5);
+}
+
+#register {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+label {
+    font-weight: bold;
+    font-size:
+        1rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea {
+    padding: 0.5rem;
+    width: 100%;
+    border: 2pxsolid#5a5a5a;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+    outline: none;
+}
+
+#btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+input[type="button"] {
+    padding: 0.3rem;
+    width: 30%;
+    border: 1pxsolid;
+    background-color:
+        #f0f0f0;
+    color: #333;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+input[type="button"]:hover {
+    background-color: #ff8c00;
+}
+
+input[type="button"]:active {
+    background-color: #ffeb3b;
+}
+
+p {
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+footer {
+    text-align: center;
+    margin-bottom:
+        1rem;
+}
