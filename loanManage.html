@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -63,33 +63,51 @@
             </form>
         </div>
 
-
         <div class="form-container" id="update-form">
             <h2>Update Loan Request</h2>
             <form id="updateForm">
-                <label for="updateLoanId">Loan ID:</label>
-                <input type="text" id="updateLoanId" required>
-                
-                <label for="updateField">Field to Update:</label>
-                <select id="updateField" required>
-                    <option value="customerName">Customer Name</option>
-                    <option value="customerOccupation">Customer Occupation</option>
-                    <option value="employerName">Employer Name</option>
-                    <option value="employerAddress">Employer Address</option>
-                    <option value="email">Email</option>
-                    <option value="address">Address</option>
-                    <option value="maritalStatus">Marital Status</option>
-                    <option value="contactNumber">Contact Number</option>
-                    <option value="loanAmount">Loan Amount</option>
-                    <option value="loanTerm">Loan Term</option>
+                <label for="updateCustomerName">Customer Name:</label>
+                <input type="text" id="updateCustomerName" placeholder="Enter customer name" required>
+        
+                <label for="updateCustomerOccupation">Customer Occupation:</label>
+                <input type="text" id="updateCustomerOccupation" placeholder="Enter customer occupation" required>
+        
+                <label for="updateEmployerName">Employer Name:</label>
+                <input type="text" id="updateEmployerName" name="updateEmployerName" required>
+        
+                <label for="updateEmployerAddress">Employer Address:</label>
+                <textarea id="updateEmployerAddress" name="updateEmployerAddress" rows="3" cols="30" required></textarea>
+        
+                <label for="updateEmail">Email:</label>
+                <input type="email" id="updateEmail" name="updateEmail" required>
+        
+                <label for="updateAddress">Address:</label>
+                <textarea id="updateAddress" name="updateAddress" rows="3" cols="30" required></textarea>
+        
+                <label for="updateMaritalStatus">Marital Status:</label>
+                <select id="updateMaritalStatus" name="updateMaritalStatus" required>
+                    <option value="single">Single</option>
+                    <option value="married">Married</option>
+                    <option value="divorced">Divorced</option>
+                    <option value="widowed">Widowed</option>
                 </select>
-                
-                <label for="updateValue">New Value:</label>
-                <input type="text" id="updateValue" required>
-                
-                <input type="submit" value="Update Loan">
+        
+                <label for="updateContactNumber">Contact Number:</label>
+                <input type="tel" id="updateContactNumber" name="updateContactNumber" required pattern="[0-9]{10}" placeholder="1234567890">
+        
+                <label for="updateSSN">Customer SSN:</label>
+                <input type="text" id="updateSSN" placeholder="Enter SSN" required>
+        
+                <label for="updateLoanAmount">Loan Amount:</label>
+                <input type="number" id="updateLoanAmount" placeholder="Enter Loan Amount" required>
+        
+                <label for="updateLoanTerm">Loan Term (Months):</label>
+                <input type="text" id="updateLoanTerm" placeholder="Enter Loan Term" required>
+        
+                <button type="button" id="update" onclick="updateLoanData()">Update</button>
             </form>
         </div>
+        
 
         <div class="form-container" id="cancel-form">
             <h2>Cancel loan request</h2>
@@ -102,6 +120,8 @@
     </div>
 
     <script>
+
+        let loanIdForCompare;
 
 
 
@@ -180,32 +200,9 @@
 
             // Clear the form after submission
             document.getElementById("loanForm").reset();
-        }
-
-        // Update loan functionality
+        }        
       
 
-        document.getElementById('updateForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const loanId = document.getElementById('updateLoanId').value;
-            const field = document.getElementById('updateField').value;
-            const value = document.getElementById('updateValue').value;
-            
-            const existingLoans = getExistingLoans();
-            const loanIndex = existingLoans.findIndex(loan => loan.loanId === loanId);
-            
-            if (loanIndex === -1) {
-                alert(`Loan with ID ${loanId} not found.`);
-                return;
-            }
-            
-            existingLoans[loanIndex][field] = value;
-            localStorage.setItem('loans', JSON.stringify(existingLoans));
-            
-            alert(`Loan ${loanId} updated successfully.`);
-            this.reset();
-        });
-        
 
         function cancelLoan() {
             let loanId = document.getElementById('loanIdCancel').value;
@@ -223,6 +220,7 @@
             // Check if the loan exists
             if (loanIndex === -1) {
                 alert("Loan with ID " + loanId + " not found.");
+
                 return;
             }
 
@@ -239,6 +237,108 @@
             document.getElementById("loanIdCancel").value = "";
         }
 
+        function updateLoanForm() {
+            const loanObj = getExistingLoans(); // Retrieve loans from localStorage
+             loanIdForCompare = prompt("Please enter Loan ID", "0");
+        
+            console.log(loanIdForCompare);
+        
+            if (!loanIdForCompare) {
+                alert("Loan Id was not entered. Please enter loan Id to update data.");
+                document.getElementById('update-form').style.display = 'none';
+                return; // User cancelled the prompt
+            }
+        
+            // Check if Loan ID exists in the loans array
+            const loanIndex = loanObj.findIndex(loan => loan.loanId === loanIdForCompare);
+        
+            console.log(loanIndex);
+        
+            if (loanIndex === -1) {
+                alert("Loan with ID " + loanIdForCompare + " not found.");
+                return;
+            }
+        
+            // If the loan is found, populate the form fields with existing values
+            const loan = loanObj[loanIndex];
+        
+            document.getElementById("updateCustomerName").value = loan.customerName;
+            document.getElementById("updateCustomerOccupation").value = loan.customerOccupation;
+            document.getElementById("updateEmployerName").value = loan.employerName;
+            document.getElementById("updateEmployerAddress").value = loan.employerAddress;
+            document.getElementById("updateEmail").value = loan.email;
+            document.getElementById("updateAddress").value = loan.address;
+            document.getElementById("updateMaritalStatus").value = loan.maritalStatus;
+            document.getElementById("updateContactNumber").value = loan.contactNumber;
+            document.getElementById("updateSSN").value = loan.ssn;
+            document.getElementById("updateLoanAmount").value = loan.loanAmount;
+            document.getElementById("updateLoanTerm").value = loan.loanTerm;
+
+
+
+
+        }
+
+
+        function updateLoanData(){
+
+            console.log("Update loan data clicked ");
+
+            let existingLoans = getExistingLoans();
+
+    // Find the index of the loan with the specified loanId
+    const loanIndex = existingLoans.findIndex(loan => loan.loanId === loanIdForCompare);
+
+    if (loanIndex === -1) {
+        alert("Loan with ID " + loanIdForCompare + " not found.");
+        return;
+    }
+    
+            const updatedLoan = {
+                loanId: loanIdForCompare,
+                customerName: document.getElementById("updateCustomerName").value,
+                customerOccupation: document.getElementById("updateCustomerOccupation").value,
+                employerName: document.getElementById("updateEmployerName").value,
+                employerAddress: document.getElementById("updateEmployerAddress").value,
+                email: document.getElementById("updateEmail").value,
+                address: document.getElementById("updateAddress").value,
+                maritalStatus: document.getElementById("updateMaritalStatus").value,
+                contactNumber: document.getElementById("updateContactNumber").value,
+                ssn: document.getElementById("updateSSN").value,
+                loanAmount: parseFloat(document.getElementById("updateLoanAmount").value),
+                loanTerm: parseInt(document.getElementById("updateLoanTerm").value)
+            };
+
+            
+                // Validate loan amount and loan term
+    if (isNaN(updatedLoan.loanAmount) || updatedLoan.loanAmount <= 0) {
+        alert("Please enter a valid Loan Amount greater than 0.");
+        return;
+    }
+
+    if (isNaN(updatedLoan.loanTerm) || updatedLoan.loanTerm <= 0) {
+        alert("Please enter a valid Loan Term in months greater than 0.");
+        return;
+    }
+
+    // Update the existing loan in the array
+    existingLoans[loanIndex] = updatedLoan;
+
+    // Save the updated loans back to localStorage
+    localStorage.setItem('loans', JSON.stringify(existingLoans));
+
+    // Confirm the update and clear the form
+    alert("Loan with ID " + loanIdForCompare + " has been successfully updated.");
+    console.log("Updated Loan Data:", updatedLoan);
+
+    // Optionally, reset the form after submission
+    document.getElementById("updateForm").reset();
+
+        }
+        
+
+        
+       
         function showForm(formType) {
             // Hide all forms
             document.getElementById('initiate-form').style.display = 'none';
@@ -247,16 +347,33 @@
 
             // Show the selected form
             if (formType === 'initiate') {
+                console.log("Initiate form selected");
                 document.getElementById('initiate-form').style.display = 'block';
             } else if (formType === 'update') {
+
+
+                console.log("Inside else if update")
+
                 document.getElementById('update-form').style.display = 'block';
+                  updateLoanForm(); // Call a new function to handle the update logic
+
+
+
+
+
+             
+
             } else if (formType === 'cancel') {
+                console.log("Cancel form selected");
                 document.getElementById('cancel-form').style.display = 'block';
             }
         }
 
+
         // Hide all forms by default on page load
         window.onload = function () {
+
+            console.log("onload function");
             document.getElementById('initiate-form').style.display = 'none';
             document.getElementById('update-form').style.display = 'none';
             document.getElementById('cancel-form').style.display = 'none';
@@ -264,14 +381,14 @@
     </script>
 </body>
 
-</html> -->
+</html>
 
 
 
 
 <!--New UI -->
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -394,7 +511,7 @@
             <button onclick="showForm('cancel')">Cancel Loan</button>
         </div>
 
-        <!-- Initiate Loan Form -->
+
         <div class="form-container" id="initiate-form">
             <h2>Initiate Loan Request</h2>
             <form id="loanForm">
@@ -440,7 +557,7 @@
             </form>
         </div>
 
-        <!-- Update Loan Form -->
+
         <div class="form-container" id="update-form">
             <h2>Update Loan Request</h2>
             <form id="updateForm">
@@ -468,7 +585,7 @@
             </form>
         </div>
 
-        <!-- Cancel Loan Form -->
+ 
         <div class="form-container" id="cancel-form">
             <h2>Cancel Loan Request</h2>
             <form>
@@ -637,4 +754,4 @@
     </script>
 </body>
 
-</html>
+</html> -->
