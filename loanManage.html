@@ -48,7 +48,8 @@
                 </select>
 
                 <label for="contactNumber">Contact Number:</label>
-                <input type="tel" id="contactNumber" name="contactNumber" required pattern="[0-9]{10}" placeholder="1234567890">
+                <input type="tel" id="contactNumber" name="contactNumber" required pattern="[0-9]{10}"
+                    placeholder="1234567890">
 
                 <label for="ssn">Customer SSN:</label>
                 <input type="text" id="ssn" placeholder="Enter SSN" required>
@@ -68,22 +69,23 @@
             <form id="updateForm">
                 <label for="updateCustomerName">Customer Name:</label>
                 <input type="text" id="updateCustomerName" placeholder="Enter customer name" required>
-        
+
                 <label for="updateCustomerOccupation">Customer Occupation:</label>
                 <input type="text" id="updateCustomerOccupation" placeholder="Enter customer occupation" required>
-        
+
                 <label for="updateEmployerName">Employer Name:</label>
                 <input type="text" id="updateEmployerName" name="updateEmployerName" required>
-        
+
                 <label for="updateEmployerAddress">Employer Address:</label>
-                <textarea id="updateEmployerAddress" name="updateEmployerAddress" rows="3" cols="30" required></textarea>
-        
+                <textarea id="updateEmployerAddress" name="updateEmployerAddress" rows="3" cols="30"
+                    required></textarea>
+
                 <label for="updateEmail">Email:</label>
                 <input type="email" id="updateEmail" name="updateEmail" required>
-        
+
                 <label for="updateAddress">Address:</label>
                 <textarea id="updateAddress" name="updateAddress" rows="3" cols="30" required></textarea>
-        
+
                 <label for="updateMaritalStatus">Marital Status:</label>
                 <select id="updateMaritalStatus" name="updateMaritalStatus" required>
                     <option value="single">Single</option>
@@ -91,32 +93,71 @@
                     <option value="divorced">Divorced</option>
                     <option value="widowed">Widowed</option>
                 </select>
-        
+
                 <label for="updateContactNumber">Contact Number:</label>
-                <input type="tel" id="updateContactNumber" name="updateContactNumber" required pattern="[0-9]{10}" placeholder="1234567890">
-        
+                <input type="tel" id="updateContactNumber" name="updateContactNumber" required pattern="[0-9]{10}"
+                    placeholder="1234567890">
+
                 <label for="updateSSN">Customer SSN:</label>
                 <input type="text" id="updateSSN" placeholder="Enter SSN" required>
-        
+
                 <label for="updateLoanAmount">Loan Amount:</label>
                 <input type="number" id="updateLoanAmount" placeholder="Enter Loan Amount" required>
-        
+
                 <label for="updateLoanTerm">Loan Term (Months):</label>
                 <input type="text" id="updateLoanTerm" placeholder="Enter Loan Term" required>
-        
+
                 <button type="button" id="update" onclick="updateLoanData()">Update</button>
             </form>
         </div>
-        
+
 
         <div class="form-container" id="cancel-form">
-            <h2>Cancel loan request</h2>
-            <form>
-                <label for="loanIdCancel">LoanId:</label>
-                <input type="text" id="loanIdCancel" placeholder="Enter loan ID" required>
-                <button type="button" class="cancel-btn" onclick="cancelLoan()">Cancel Loan Request</button>
+            <h2>Cancel Loan Request</h2>
+            <form id="cancelForm">
+                <label for="cancelCustomerName">Customer Name:</label>
+                <input type="text" id="cancelCustomerName" placeholder="Enter customer name" readonly>
+
+                <label for="cancelCustomerOccupation">Customer Occupation:</label>
+                <input type="text" id="cancelCustomerOccupation" placeholder="Enter customer occupation" readonly>
+
+                <label for="cancelEmployerName">Employer Name:</label>
+                <input type="text" id="cancelEmployerName" name="cancelEmployerName" readonly>
+
+                <label for="cancelEmployerAddress">Employer Address:</label>
+                <textarea id="cancelEmployerAddress" name="cancelEmployerAddress" rows="3" cols="30"
+                    readonly></textarea>
+
+                <label for="cancelEmail">Email:</label>
+                <input type="email" id="cancelEmail" name="cancelEmail" readonly>
+
+                <label for="cancelAddress">Address:</label>
+                <textarea id="cancelAddress" name="cancelAddress" rows="3" cols="30" readonly></textarea>
+
+                <label for="cancelMaritalStatus">Marital Status:</label>
+                <select id="cancelMaritalStatus" name="cancelMaritalStatus" disabled>
+                    <option value="single">Single</option>
+                    <option value="married">Married</option>
+                    <option value="divorced">Divorced</option>
+                    <option value="widowed">Widowed</option>
+                </select>
+
+                <label for="cancelContactNumber">Contact Number:</label>
+                <input type="tel" id="cancelContactNumber" name="cancelContactNumber" readonly>
+
+                <label for="cancelSSN">Customer SSN:</label>
+                <input type="text" id="cancelSSN" placeholder="Enter SSN" readonly>
+
+                <label for="cancelLoanAmount">Loan Amount:</label>
+                <input type="number" id="cancelLoanAmount" placeholder="Enter Loan Amount" readonly>
+
+                <label for="cancelLoanTerm">Loan Term (Months):</label>
+                <input type="text" id="cancelLoanTerm" placeholder="Enter Loan Term" readonly>
+
+                <button type="button" id="cancelLoanBtn" onclick="deleteLoan()">Cancel Loan</button>
             </form>
         </div>
+
     </div>
 
     <script>
@@ -200,68 +241,36 @@
 
             // Clear the form after submission
             document.getElementById("loanForm").reset();
-        }        
-      
-
-
-        function cancelLoan() {
-            let loanId = document.getElementById('loanIdCancel').value;
-            if (!loanId) {
-                alert("Please enter a Loan ID.");
-                return;
-            }
-
-            // Retrieve all loans from localStorage
-            const existingLoans = JSON.parse(localStorage.getItem('loans')) || [];
-
-            // Find the loan object by loanId
-            const loanIndex = existingLoans.findIndex(loan => loan.loanId === loanId);
-
-            // Check if the loan exists
-            if (loanIndex === -1) {
-                alert("Loan with ID " + loanId + " not found.");
-
-                return;
-            }
-
-            // Remove the loan object from the array
-            existingLoans.splice(loanIndex, 1);
-
-            // Update the localStorage with the new array (after deletion)
-            localStorage.setItem('loans', JSON.stringify(existingLoans));
-
-            // Confirm deletion
-            alert("Loan with ID " + loanId + " has been deleted.");
-
-            // Optionally, clear the input field after deletion
-            document.getElementById("loanIdCancel").value = "";
         }
+
+
+
 
         function updateLoanForm() {
             const loanObj = getExistingLoans(); // Retrieve loans from localStorage
-             loanIdForCompare = prompt("Please enter Loan ID", "0");
-        
+            loanIdForCompare = prompt("Please enter Loan ID", "0");
+
             console.log(loanIdForCompare);
-        
+
             if (!loanIdForCompare) {
                 alert("Loan Id was not entered. Please enter loan Id to update data.");
                 document.getElementById('update-form').style.display = 'none';
                 return; // User cancelled the prompt
             }
-        
+
             // Check if Loan ID exists in the loans array
             const loanIndex = loanObj.findIndex(loan => loan.loanId === loanIdForCompare);
-        
+
             console.log(loanIndex);
-        
+
             if (loanIndex === -1) {
                 alert("Loan with ID " + loanIdForCompare + " not found.");
                 return;
             }
-        
+
             // If the loan is found, populate the form fields with existing values
             const loan = loanObj[loanIndex];
-        
+
             document.getElementById("updateCustomerName").value = loan.customerName;
             document.getElementById("updateCustomerOccupation").value = loan.customerOccupation;
             document.getElementById("updateEmployerName").value = loan.employerName;
@@ -280,20 +289,20 @@
         }
 
 
-        function updateLoanData(){
+        function updateLoanData() {
 
             console.log("Update loan data clicked ");
 
             let existingLoans = getExistingLoans();
 
-    // Find the index of the loan with the specified loanId
-    const loanIndex = existingLoans.findIndex(loan => loan.loanId === loanIdForCompare);
+            // Find the index of the loan with the specified loanId
+            const loanIndex = existingLoans.findIndex(loan => loan.loanId === loanIdForCompare);
 
-    if (loanIndex === -1) {
-        alert("Loan with ID " + loanIdForCompare + " not found.");
-        return;
-    }
-    
+            if (loanIndex === -1) {
+                alert("Loan with ID " + loanIdForCompare + " not found.");
+                return;
+            }
+
             const updatedLoan = {
                 loanId: loanIdForCompare,
                 customerName: document.getElementById("updateCustomerName").value,
@@ -309,36 +318,112 @@
                 loanTerm: parseInt(document.getElementById("updateLoanTerm").value)
             };
 
-            
-                // Validate loan amount and loan term
-    if (isNaN(updatedLoan.loanAmount) || updatedLoan.loanAmount <= 0) {
-        alert("Please enter a valid Loan Amount greater than 0.");
-        return;
-    }
 
-    if (isNaN(updatedLoan.loanTerm) || updatedLoan.loanTerm <= 0) {
-        alert("Please enter a valid Loan Term in months greater than 0.");
-        return;
-    }
+            // Validate loan amount and loan term
+            if (isNaN(updatedLoan.loanAmount) || updatedLoan.loanAmount <= 0) {
+                alert("Please enter a valid Loan Amount greater than 0.");
+                return;
+            }
 
-    // Update the existing loan in the array
-    existingLoans[loanIndex] = updatedLoan;
+            if (isNaN(updatedLoan.loanTerm) || updatedLoan.loanTerm <= 0) {
+                alert("Please enter a valid Loan Term in months greater than 0.");
+                return;
+            }
 
-    // Save the updated loans back to localStorage
-    localStorage.setItem('loans', JSON.stringify(existingLoans));
+            // Update the existing loan in the array
+            existingLoans[loanIndex] = updatedLoan;
 
-    // Confirm the update and clear the form
-    alert("Loan with ID " + loanIdForCompare + " has been successfully updated.");
-    console.log("Updated Loan Data:", updatedLoan);
+            // Save the updated loans back to localStorage
+            localStorage.setItem('loans', JSON.stringify(existingLoans));
 
-    // Optionally, reset the form after submission
-    document.getElementById("updateForm").reset();
+            // Confirm the update and clear the form
+            alert("Loan with ID " + loanIdForCompare + " has been successfully updated.");
+            console.log("Updated Loan Data:", updatedLoan);
+
+            // Optionally, reset the form after submission
+            document.getElementById("updateForm").reset();
 
         }
-        
 
-        
-       
+
+        function cancelLoan() {
+            loanIdForCompare = prompt("Please enter Loan ID", "0");
+
+            if (!loanIdForCompare) {
+                alert("Loan ID was not entered. Please enter Loan ID to cancel.");
+                return; // User canceled the prompt
+            }
+
+            // Retrieve existing loans from localStorage
+            let existingLoans = getExistingLoans();
+
+            // Find the index of the loan with the specified loanId
+            const loanIndex = existingLoans.findIndex(loan => loan.loanId === loanIdForCompare);
+
+            if (loanIndex === -1) {
+                alert("Loan with ID " + loanIdForCompare + " not found.");
+                return;
+            }
+
+            // Populate the form fields with the existing loan data
+            const loan = existingLoans[loanIndex];
+
+            console.log("Cancel Object", loan);
+            document.getElementById("cancelCustomerName").value = loan.customerName;
+            document.getElementById("cancelCustomerOccupation").value = loan.customerOccupation;
+            document.getElementById("cancelEmployerName").value = loan.employerName;
+            document.getElementById("cancelEmployerAddress").value = loan.employerAddress;
+            document.getElementById("cancelEmail").value = loan.email;
+            document.getElementById("cancelAddress").value = loan.address;
+            document.getElementById("cancelMaritalStatus").value = loan.maritalStatus;
+            document.getElementById("cancelContactNumber").value = loan.contactNumber;
+            document.getElementById("cancelSSN").value = loan.ssn;
+            document.getElementById("cancelLoanAmount").value = loan.loanAmount;
+            document.getElementById("cancelLoanTerm").value = loan.loanTerm;
+
+            // Make all fields read-only and disable the marital status dropdown
+            document.querySelectorAll('#cancelForm input, #cancelForm textarea').forEach(field => {
+                field.setAttribute('readonly', true);
+            });
+            document.getElementById('cancelMaritalStatus').setAttribute('disabled', true);
+
+
+        }
+
+
+        function deleteLoan() {
+            // Ask for confirmation before removing the loan
+
+            let existingLoans = getExistingLoans();
+
+            // Find the index of the loan with the specified loanId
+            const loanIndex = existingLoans.findIndex(loan => loan.loanId === loanIdForCompare);
+
+            if (loanIndex === -1) {
+                alert("Loan with ID " + loanIdForCompare + " not found.");
+                return;
+            }
+
+
+            if (confirm("Are you sure you want to cancel the loan with ID: " + loanIdForCompare + "?")) {
+                // Remove the loan from the array
+                existingLoans.splice(loanIndex, 1);
+
+                // Update localStorage with the new array
+                localStorage.setItem('loans', JSON.stringify(existingLoans));
+
+                // Confirmation message
+                alert("Loan with ID " + loanIdForCompare + " has been canceled.");
+
+                // Optionally, clear the form after cancellation
+                document.getElementById("cancelForm").reset();
+            }
+        }
+
+
+
+
+
         function showForm(formType) {
             // Hide all forms
             document.getElementById('initiate-form').style.display = 'none';
@@ -355,17 +440,18 @@
                 console.log("Inside else if update")
 
                 document.getElementById('update-form').style.display = 'block';
-                  updateLoanForm(); // Call a new function to handle the update logic
+                updateLoanForm(); // Call a new function to handle the update logic
 
 
 
 
 
-             
+
 
             } else if (formType === 'cancel') {
                 console.log("Cancel form selected");
                 document.getElementById('cancel-form').style.display = 'block';
+                cancelLoan();
             }
         }
 
